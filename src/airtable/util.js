@@ -38,9 +38,27 @@ export function getRecords(tableID) {
     });
 }
 
+export function updateRecord(data, tableID) {
+    const url = getURL(tableID);
+    let headers = getHeaders();
+    headers.method = 'PATCH';
+    // headers.mode = 'no-cors';
+    headers.headers.contentType = 'application/json';
+    headers.body = JSON.stringify(data);
+    console.log(url, headers);
+    return fetch(url, headers).then(res => res.json()).then(response => {
+        if (!response.ok) {
+            return Promise.reject(response);
+        }
+        return response.json();
+    });
+}
+
 export function getStudents() {
     const url = getURL(STUDENTS_TABLE);
     const headers = getHeaders();
     return fetch(url, headers).then(res => res.json());
 }
+
+
 
